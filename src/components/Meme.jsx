@@ -1,16 +1,22 @@
 import React from 'react'
 import {memes} from './MemesData.js'
-import { useState } from 'react'
+import { useState, useEffect }from 'react'
 
 export default function Meme () {
-    
-const [meme, setMeme] = useState({
-    topText: " ",
-    bottomText: " ",
-    randomImage: 'http://i.imgflip.com/1bij.jpg'
-})
 
-const [allMemeImages, setAllMemeImages] = React.useState(memes)
+    const [meme, setMeme] = React.useState({
+        topText: "",
+        bottomText: "",
+        randomImage: "http://i.imgflip.com/1bij.jpg" 
+
+    })
+    const [allMemeImages, setAllMemeImages] = React.useState([])
+    useEffect(() => {
+        fetch("https://api.imgflip.com/get_memes")
+            .then(res => res.json())
+            .then(data => setAllMemeImages(data.data.memes))
+    }, [])
+    
    
         {/*
         Setting a random image as defaut and changing its state when the button is clicked
