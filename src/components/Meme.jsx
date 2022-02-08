@@ -12,30 +12,6 @@ const [meme, setMeme] = useState({
 
 const [allMemeImages, setAllMemeImages] = React.useState(memes)
    
-    /**
-     * Challenge: Update our state to save the meme-related
-     * data as an object called `meme`. It should have the
-     * following 3 properties:
-     * topText, bottomText, randomImage.
-     * 
-     * The 2 text states can default to empty strings for now,
-     * amd randomImage should default to "http://i.imgflip.com/1bij.jpg"
-     * 
-     * Next, create a new state variable called `allMemeImages`
-     * which will default to `memesData`, which we imported above
-     * 
-     * Lastly, update the `getMemeImage` function and the markup 
-     * to reflect our newly reformed state object and array in the
-     * correct way.
-     * const [memeImage, setMemeImage] = useState(0)
-     *  const [memeImage, setMemeImage] = useState ({
-        meme: {
-           
-        }
-    });
-
-    const allMemeImages = memes;
-     */
         {/*
         Setting a random image as defaut and changing its state when the button is clicked
         */}
@@ -48,26 +24,46 @@ const [allMemeImages, setAllMemeImages] = React.useState(memes)
 
             }))
         };
-          
+        function handleChange(event) {
+            const {name, value} = event.target
+            setMeme(prevMeme => ({
+                ...prevMeme,
+                [name]: value
+            }))
+        }
+        
     
 
     return(
-        <div className = "meme">
-            
-                <div className = "info">
-                <input type="text" placeholder = "Shut up"  className = "first--box"/>
-                <input type="text" placeholder = "and take my money" className = "second--box"/>
-                </div>
-                
-                <div>
-                <button type = "submit" onClick = {randomImage}> Get a new meme image  🖼</button>
-                 </div>
-                <div>
-                    {/*rendering an image url as default before the change of state */}
-                    <img src = {meme.randomImage} alt = "img" className = "image--container" />
-                </div>
-            
+        <main>
+            <div className = "form">
+            <input 
+            type="text" 
+            placeholder = "Top text"  
+            className = "form--input"
+            name="topText"
+            value={meme.topText}
+            onChange={handleChange}
+            />
 
+            <input type="text" 
+            placeholder = "Bottom text" 
+            className = "form--input"
+            name="bottomText"
+            value={meme.bottomText}
+            onChange={handleChange}
+            />
+            <button type = "submit" onClick = {randomImage} className = "form--button"> Get a new meme image  🖼</button>
+             {/*rendering an image url as default before the change of state */}
+             <div className="meme">
+            <img src={meme.randomImage} className="meme--image" alt = "img" />
+            <h2 className="meme--text top">{meme.topText}</h2>
+            <h2 className="meme--text bottom">{meme.bottomText}</h2>
         </div>
+        </div>
+        
+        </main>
+        
+       
     )
 }
